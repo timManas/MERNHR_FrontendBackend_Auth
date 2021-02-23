@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { listProducts } from '../actions/productActions'
+import { Col, Row } from 'react-bootstrap'
+import Product from '../components/Product.js'
 
 const HomeScreen = () => {
   // Solution #2 - Using Redux
@@ -13,7 +15,6 @@ const HomeScreen = () => {
   useEffect(() => {
     dispatch(listProducts())
   }, [dispatch])
-
 
   return (
     <>
