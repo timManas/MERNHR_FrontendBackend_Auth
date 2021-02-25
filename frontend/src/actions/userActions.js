@@ -48,7 +48,4 @@ export const logout = () => (dispatch) => {
   localStorage.removeItem('userInfo')
 
   dispatch({ type: USER_LOGOUT }) // Log user out and send to state
-  dispatch({ type: USER_DETAILS_RESET }) // Clears user details in state
-  dispatch({ type: ORDER_LIST_MY_RESET }) // Clears user orders in state
-  dispatch({ type: USER_LIST_RESET }) // Clears the user list i
 }
