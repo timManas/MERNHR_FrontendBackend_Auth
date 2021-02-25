@@ -1,0 +1,54 @@
+import axios from 'axios'
+import {
+  USER_LOGIN_FAIL,
+  USER_LOGIN_REQUEST,
+  USER_LOGOUT,
+  USER_LOGIN_SUCCESS,
+} from '../constants/userConstants'
+
+export const login = (email, password) => async (dispatch) => {
+  try {
+    dispatch({
+      type: USER_LOGIN_REQUEST,
+    })
+
+    // When sending data, we want to send header of content type to JSON
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+
+    // Send POST request of user by username/password
+    const { data } = await axios.post(
+      '/api/users/login',
+      { email, password },
+      config
+    )
+
+    // Dispatch and send to Reducer
+    dispatch({
+      type: USER_LOGIN_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    // If fetching data was not succesful
+    dispatch({
+      type: USER_LOGIN_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
+
+export const logout = () => (dispatch) => {
+  // removes userinfo from storage
+  localStorage.removeItem('userInfo')
+
+  dispatch({ type: USER_LOGOUT }) // Log user out and send to state
+  dispatch({ type: USER_DETAILS_RESET }) // Clears user details in state
+  dispatch({ type: ORDER_LIST_MY_RESET }) // Clears user orders in state
+  dispatch({ type: USER_LIST_RESET }) // Clears the user list i
+}
